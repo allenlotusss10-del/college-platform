@@ -14,7 +14,8 @@ export default function CollegeListing() {
     const fetchColleges = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:5000/api/colleges?search=${query}`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${apiUrl}/api/colleges?search=${query}`);
         const data = await res.json();
         setColleges(data);
       } catch (error) {
