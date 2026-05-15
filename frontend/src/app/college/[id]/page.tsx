@@ -12,7 +12,8 @@ export default function CollegeDetailPage() {
   useEffect(() => {
     const fetchCollege = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/colleges/${params.id}`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${apiUrl}/api/colleges/${params.id}`);
         const data = await res.json();
         setCollege(data);
       } catch (error) {

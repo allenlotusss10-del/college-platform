@@ -62,8 +62,9 @@ function CompareTable() {
 
   useEffect(() => {
     const fetchSelected = async () => {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
       const results = await Promise.all(
-        ids.map(id => fetch(`http://localhost:5000/api/colleges/${id}`).then(res => res.json()))
+        ids.map(id => fetch(`${apiUrl}/api/colleges/${id}`).then(res => res.json()))
       );
       setColleges(results);
     };

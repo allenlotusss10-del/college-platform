@@ -5,9 +5,26 @@ import express from "express";
 import cors from "cors";
 import { Pool } from "pg";
 
+// ── Env validation ───────────────────────────────────────────────────────────────
+if (!process.env.DATABASE_URL) {
+  console.error("❌  DATABASE_URL environment variable is required but not set.");
+  process.exit(1);
+}
+
 // ── Express setup ───────────────────────────────────────────────────────────────
 const app = express();
-app.use(cors());
+
+const allowedOrigins = process.env.FRONTEND_URL
+  ? [process.env.FRONTEND_URL]
+  : ["http://localhost:3000"];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET"],
+    optionsSuccessStatus: 200,
+  })
+);
 app.use(express.json());
 
 // ── PostgreSQL connection pool ──────────────────────────────────────────────────
